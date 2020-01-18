@@ -11,13 +11,25 @@ defmodule Cards do
     values = [ "Ace", "Two", "Three", "Four", "Five", "King" ]
     suits = [ "Spades", "Clubs", "Hearts", "Diamonds" ]
 
-    # creating a list comprehension
-    for value <- values do
+    #storing a couple of list comprehensions into a variable
+    #FIRST WAY
+    cards = 
+    for value <- values do # creating a list comprehension
       # inner list comp.
       for suit <- suits do
         # this is a string concatenation
         "#{value} of #{suit}"
       end
+    end
+    # creating a list based on the given lists inside the function
+    List.flatten(
+      cards
+    )
+
+    #storing a couple of list comprehensions into a linear list
+    #SECOND WAY
+    for suit <- suits, value <- values do
+      "#{value} of #{suit}"
     end
   end
 
@@ -37,5 +49,15 @@ defmodule Cards do
   """
   def contains?(deck, hand) do
     Enum.member?(deck, hand)
+  end
+
+  @doc """
+  Method to return a certain hand size deck
+  """
+  def deal(deck, hand_size) do
+    # return a tuple, yes tuples exist in elixir in {} curly braces shape
+    #a tuple start on 0
+    # in this case hand returns in position 0
+    Enum.split(deck, hand_size)
   end
 end
