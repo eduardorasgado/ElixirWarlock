@@ -1,2 +1,2 @@
 # ElixirWarlock
-Starting with elixir programming and functional programming
+Starting out with elixir programming and functional programming
