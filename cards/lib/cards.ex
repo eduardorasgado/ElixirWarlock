@@ -8,7 +8,17 @@ defmodule Cards do
   """
   def create_deck do
     # creating an array of strings
-    [ "Ace", "Two", "Three" ];
+    values = [ "Ace", "Two", "Three", "Four", "Five", "King" ]
+    suits = [ "Spades", "Clubs", "Hearts", "Diamonds" ]
+
+    # creating a list comprehension
+    for value <- values do
+      # inner list comp.
+      for suit <- suits do
+        # this is a string concatenation
+        "#{value} of #{suit}"
+      end
+    end
   end
 
   @doc """
@@ -16,7 +26,7 @@ defmodule Cards do
   """
   def shuffle_deck(deck) do
     # using elixir standard library
-    Enum.shuffle(deck);
+    Enum.shuffle(deck)
   end
 
   @doc """
