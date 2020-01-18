@@ -53,11 +53,16 @@ defmodule Cards do
 
   @doc """
   Method to return a certain hand size deck
+
+  Pattern matching: Elixir replacement for variable assignment
   """
   def deal(deck, hand_size) do
     # return a tuple, yes tuples exist in elixir in {} curly braces shape
     #a tuple start on 0
     # in this case hand returns in position 0
-    Enum.split(deck, hand_size)
+    # pattern matching used to take deck from tuple resulted from splitting
+    # right is a tuple so left should be a tuple
+    { hand, rest_of_deck } = Enum.split(deck, hand_size)
+    hand    
   end
 end
