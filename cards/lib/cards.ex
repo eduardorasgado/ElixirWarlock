@@ -62,7 +62,7 @@ defmodule Cards do
     # in this case hand returns in position 0
     # pattern matching used to take deck from tuple resulted from splitting
     # right is a tuple so left should be a tuple
-    { hand, rest_of_deck } = Enum.split(deck, hand_size)
+    { hand, _rest_of_deck } = Enum.split(deck, hand_size)
     hand    
   end
 
@@ -80,14 +80,15 @@ defmodule Cards do
   Method to read a binary saved deck
   """
   def read(filename) do
-    { status, binary } = File.read filename
-
+    #{ status, binary } = File.read filename
+    
     # error handling using case statement
-    case status do
+    case File.read filename do
       # this is the same that .binary_to_term(binary)
-      :ok -> 
-        :erlang.binary_to_term binary
-      :error -> 
+      { :ok, binary } -> :erlang.binary_to_term binary
+      # use underscore when a variable in pattern matching left side wont be
+      # used in next operations
+      { :error, _reason } -> 
         "No file with file name: #{filename} does not exists."
     end
   end
