@@ -47,10 +47,16 @@ defmodule Cards do
   end
 
   @doc """
-  function that returns if a deck contains a card
+  Function that returns whether a deck contains a given card
 
   finishing a function with ? question mark means that
   this function will return a boolean
+
+  ##Examples
+
+      iex> deck = Cards.create_deck
+      iex> Cards.contains?(deck, "Ace of Spades")
+      true
   """
   def contains?(deck, hand) do
     Enum.member?(deck, hand)
