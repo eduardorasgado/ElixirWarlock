@@ -1,6 +1,11 @@
 defmodule Cards do
   @moduledoc """
   This module is for playing a card game
+
+  run 
+    mix docs
+  to be able to get project documentation, we had to add ex_doc dependency
+  on mix.exs
   """
 
   @doc """
