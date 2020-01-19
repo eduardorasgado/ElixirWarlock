@@ -80,7 +80,15 @@ defmodule Cards do
   Method to read a binary saved deck
   """
   def read(filename) do
-    { status, binary } = File.read(filename)
-    :erlang.binary_to_term(binary)
+    { status, binary } = File.read filename
+
+    # error handling using case statement
+    case status do
+      # this is the same that .binary_to_term(binary)
+      :ok -> 
+        :erlang.binary_to_term binary
+      :error -> 
+        "No file with file name: #{filename} does not exists."
+    end
   end
 end
