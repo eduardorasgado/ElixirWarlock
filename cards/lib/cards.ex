@@ -52,7 +52,7 @@ defmodule Cards do
   finishing a function with ? question mark means that
   this function will return a boolean
 
-  ##Examples
+  ## Examples
 
       iex> deck = Cards.create_deck
       iex> Cards.contains?(deck, "Ace of Spades")
@@ -103,6 +103,13 @@ defmodule Cards do
 
   @doc """
   Method to read a binary saved deck
+
+  ## Examples
+
+      iex> filename = "non_existing_one"
+      iex> Cards.read(filename)
+      "No file with file name: non_existing_one does not exists."
+
   """
   def read(filename) do
     #{ status, binary } = File.read filename
