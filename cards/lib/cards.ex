@@ -69,8 +69,8 @@ defmodule Cards do
       iex> deck = Cards.create_deck
       iex> hand = Cards.deal(deck, 2)
       iex> hand
-      ["Ace of Spades", "Two of Spaces"]
-      
+      ["Ace of Spades", "Two of Spades"]
+
   """
   def deal(deck, hand_size) do
     # return a tuple, yes tuples exist in elixir in {} curly braces shape
