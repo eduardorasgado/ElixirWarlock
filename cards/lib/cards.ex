@@ -60,6 +60,17 @@ defmodule Cards do
   Method to return a certain hand size deck
 
   Pattern matching: Elixir replacement for variable assignment
+
+  The `deck` arguments is a list of cards preferable shuffled before.
+  The `hand_size` argument indicates how many cards should be in the hand.
+
+  ## Examples
+
+      iex> deck = Cards.create_deck
+      iex> hand = Cards.deal(deck, 2)
+      iex> hand
+      ["Ace of Spades", "Two of Spaces"]
+      
   """
   def deal(deck, hand_size) do
     # return a tuple, yes tuples exist in elixir in {} curly braces shape
@@ -73,6 +84,9 @@ defmodule Cards do
 
   @doc """
   Write out our current deck in file system
+
+  The `filename` argument indicates the name user will use to access again
+  to the deck resource.
   """
   def save(deck, filename) do
     # erlang object here is built in erlang method, to execute erlang code
