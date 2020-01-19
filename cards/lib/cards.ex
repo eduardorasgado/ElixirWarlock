@@ -65,4 +65,14 @@ defmodule Cards do
     { hand, rest_of_deck } = Enum.split(deck, hand_size)
     hand    
   end
+
+  @doc """
+  Write out our current deck in file system
+  """
+  def save(deck, filename) do
+    # erlang object here is built in erlang method, to execute erlang code
+    # in non erlang environment
+    binary = :erlang.term_to_binary(deck)
+    File.write(filename, binary)
+  end
 end
