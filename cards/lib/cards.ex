@@ -92,4 +92,14 @@ defmodule Cards do
         "No file with file name: #{filename} does not exists."
     end
   end
+
+  @doc """
+  Returns a hand created by shuffleing a created deck and splitting it
+  """
+  def create_hand(hand_size) do
+    # using pipe operator to avoid variable creation and code simplification
+    Cards.create_deck 
+    |> Cards.shuffle_deck() 
+    |> Cards.deal(hand_size)
+  end
 end
