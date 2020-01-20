@@ -134,4 +134,25 @@ defmodule Cards do
     |> Cards.shuffle_deck() 
     |> Cards.deal(hand_size)
   end
+
+  @doc """
+  Function to create a deck and repart between 5 players
+  """
+  def repart_deck() do
+    {[ nelson, eduardo, brian, celeste | domingo ], _} = 
+        Enum.split(Cards.create_deck, 5)
+    myMap = %{eduardo: eduardo, 
+              nelson: nelson, 
+              brian: brian, 
+              celeste: celeste, 
+              domingo: domingo }
+
+    [ domingo_card ] = domingo
+    # creating concatenation every time we create a new line
+    "Map is-> Eduardo: #{myMap.eduardo},"<>
+    " nelson: #{myMap.nelson}, "<>
+    "brian: #{myMap.brian}, "<>
+    "celeste: #{myMap.celeste}, "<>
+    "domingo: #{domingo_card}."
+  end
 end
