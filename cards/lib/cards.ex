@@ -147,12 +147,29 @@ defmodule Cards do
               celeste: celeste, 
               domingo: domingo }
 
-    [ domingo_card ] = domingo
+    [ domingo_card ] = myMap.domingo
     # creating concatenation every time we create a new line
     "Map is-> Eduardo: #{myMap.eduardo},"<>
     " nelson: #{myMap.nelson}, "<>
     "brian: #{myMap.brian}, "<>
     "celeste: #{myMap.celeste}, "<>
     "domingo: #{domingo_card}."
+  end
+
+  def updating_deck() do
+    colors = %{ primary: "red", secondary: "blue" }
+    # reassigning new value to existing key in a map using Map.put
+    colors = Map.put(colors, :secondary, "yellow")
+    # to be able to get value from the map we should create 
+    #a pattern matching a bit simpler
+    %{ secondary: secondary_color } = colors
+    secondary_color
+  end
+
+  def updating_deck2() do
+    colors = %{ primary: "red", secondary: "blue" }
+    # updating deck map using pipe operator
+    colors = %{ colors | secondary: "yellow" }
+    colors
   end
 end
