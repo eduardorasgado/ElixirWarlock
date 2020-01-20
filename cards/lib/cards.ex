@@ -170,6 +170,8 @@ defmodule Cards do
     colors = %{ primary: "red", secondary: "blue" }
     # updating deck map using pipe operator
     colors = %{ colors | secondary: "yellow" }
-    colors
+
+    # adding new property to maps using Map.put_new function 
+    colors = Map.put_new(colors, :third, "Green")
   end
 end
