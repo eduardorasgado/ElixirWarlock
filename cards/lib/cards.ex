@@ -174,4 +174,15 @@ defmodule Cards do
     # adding new property to maps using Map.put_new function 
     colors = Map.put_new(colors, :third, "Green")
   end
+
+  def keyword_lists() do
+    # a list and tuples inside
+    colors = [ 
+      {:primary, "red"}, 
+      {:secondary, "green"}, 
+      {:thirth, "yellow"} 
+    ]
+    # we can access the values in some keyword of list by
+    colors[:secondary]
+  end
 end
