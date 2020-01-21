@@ -1,5 +1,5 @@
 defmodule Identicon do
-  @doc """
+  @moduledoc """
   Converts a string into an identicon
 
   This module uses md5 encoding to convert string into a binary
@@ -15,16 +15,17 @@ defmodule Identicon do
   """
   def main(input) do
     # even = color, #odd = white
-    input 
+    input
     |> hash_input
     |> pick_color
+    |> grid_constructor
   end
 
   @doc """
-  Converts a string input into a hash md5 code string 
+  Converts a string input into a hash md5 code string
   """
   def hash_input(input) do
-    hex = :crypto.hash(:md5, input) 
+    hex = :crypto.hash(:md5, input)
     |> :binary.bin_to_list
 
     %Identicon.Image{hex: hex}
@@ -34,17 +35,33 @@ defmodule Identicon do
   Function that takes first 3 elements from hex list and creates a 3 elements tuple
   that will act like rgb color
   This function returns a new Image struct with color assigned
-  We can do pattern matching directly into parenthesis in def statement, 
+  We can do pattern matching directly into parenthesis in def statement,
   """
   def pick_color(%Identicon.Image{ hex: hex_list } = input) do
     [ red, green, blue | _tail ] = hex_list
     # we use a pipe to assign elements from last struct to new one
     %Identicon
       .Image{
-        input | 
-        color: {red, 
-                green, 
+        input |
+        color: {red,
+                green,
                 blue}
       }
   end
+
+  @doc """
+  Function that will convert a list of bin numbers into a list of color/white (1/0)
+  """
+  def grid_constructor(%Identicon.Image{ hex: hex_list} = input) do
+
+    # creating a list of 3 elements list using hex list
+    grid_list = for row <- Enum.chunk_every(hex_list, 3,3, :discard) do
+      [ a, b, c ] = row
+      #mirroring grid
+      [ a, b, c, b, a]
+    end
+
+    %Identicon.Image{ input | grid: grid_list }
+  end
+
 end

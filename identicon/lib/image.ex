@@ -3,6 +3,7 @@ defmodule Identicon.Image do
     Module to represent the image struct
     """
 
-    defstruct hex: nil, 
-            color: nil
+    defstruct hex: nil,
+            color: nil,
+            grid: nil
 end
