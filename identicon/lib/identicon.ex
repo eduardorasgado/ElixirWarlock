@@ -52,16 +52,19 @@ defmodule Identicon do
   @doc """
   Function that will convert a list of bin numbers into a list of color/white (1/0)
   """
-  def grid_constructor(%Identicon.Image{ hex: hex_list} = _input) do
+  def grid_constructor(%Identicon.Image{ hex: hex_list} = input) do
 
     grid_list = hex_list
-    |> converts_to_string
+    |> Identicon.converts_to_string
     |> Enum.chunk_every(3,3, :discard)
+    |> Identicon.mirror_row
 
     # creating a list of 3 elements list using hex list
     for list <- grid_list do
       Identicon.converts_to_number(list)
     end
+
+    %Identicon.Image{ input | grid: grid_list }
   end
 
   @doc """
@@ -78,13 +81,11 @@ defmodule Identicon do
   list but mirroring the 2 values before third and last value.
   """
   def mirror_row(input) do
-    grid_list = for row <- input.hex do
+    for row <- input do
       [ a, b, c ] = row
       #mirroring grid
       [ a, b, c, b, a]
     end
-
-    %Identicon.Image{ input | grid: grid_list }
   end
 
   def converts_to_number(list) do
