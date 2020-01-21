@@ -58,7 +58,10 @@ defmodule Identicon do
       # passing a reference to a function, we pass a /1 to indicates what mirror_row version of function
       # it is about, if we would have more than one mirror function it is useful
       |> Enum.map(&Identicon.mirror_row/1)
+      # creating just one list and not nested one
+      |> List.flatten
       |> Enum.map(&Identicon.converts_to_number/1)
+      |> Enum.with_index
 
     %Identicon.Image{input | grid: grid_list}
   end
@@ -85,10 +88,8 @@ defmodule Identicon do
   @doc """
   Converts a string list into integer list
   """
-  def converts_to_number(list) do
-    for element <- list do
-      {number, _rest} = Integer.parse(element)
-      number
-    end
+  def converts_to_number(string_num) do
+    {number, _rest} = Integer.parse(string_num)
+    number
   end
 end
