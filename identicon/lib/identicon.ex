@@ -25,8 +25,9 @@ defmodule Identicon do
   Converts a string input into a hash md5 code string
   """
   def hash_input(input) do
-    hex = :crypto.hash(:md5, input)
-    |> :binary.bin_to_list
+    hex =
+      :crypto.hash(:md5, input)
+      |> :binary.bin_to_list()
 
     %Identicon.Image{hex: hex}
   end
@@ -37,34 +38,29 @@ defmodule Identicon do
   This function returns a new Image struct with color assigned
   We can do pattern matching directly into parenthesis in def statement,
   """
-  def pick_color(%Identicon.Image{ hex: hex_list } = input) do
-    [ red, green, blue | _tail ] = hex_list
+  def pick_color(%Identicon.Image{hex: hex_list} = input) do
+    [red, green, blue | _tail] = hex_list
     # we use a pipe to assign elements from last struct to new one
-    %Identicon
-      .Image{
-        input |
-        color: {red,
-                green,
-                blue}
-      }
+    %Identicon.Image{
+      input
+      | color: {red, green, blue}
+    }
   end
 
   @doc """
   Function that will convert a list of bin numbers into a list of color/white (1/0)
   """
-  def grid_constructor(%Identicon.Image{ hex: hex_list} = input) do
+  def grid_constructor(%Identicon.Image{hex: hex_list} = input) do
+    grid_list =
+      hex_list
+      |> Identicon.converts_to_string()
+      |> Enum.chunk_every(3, 3, :discard)
+      # passing a reference to a function, we pass a /1 to indicates what mirror_row version of function
+      # it is about, if we would have more than one mirror function it is useful
+      |> Enum.map(&Identicon.mirror_row/1)
+      |> Enum.map(&Identicon.converts_to_number/1)
 
-    grid_list = hex_list
-    |> Identicon.converts_to_string
-    |> Enum.chunk_every(3,3, :discard)
-    |> Identicon.mirror_row
-
-    # creating a list of 3 elements list using hex list
-    for list <- grid_list do
-      Identicon.converts_to_number(list)
-    end
-
-    %Identicon.Image{ input | grid: grid_list }
+    %Identicon.Image{input | grid: grid_list}
   end
 
   @doc """
@@ -77,22 +73,22 @@ defmodule Identicon do
   end
 
   @doc """
-  Creates a mirror list of lists, where first 2 elements will be repeated in every
+  Creates a mirror list, where first 2 elements will be repeated in every
   list but mirroring the 2 values before third and last value.
   """
-  def mirror_row(input) do
-    for row <- input do
-      [ a, b, c ] = row
-      #mirroring grid
-      [ a, b, c, b, a]
-    end
+  def mirror_row(row) do
+    [first, second | _tail] = row
+    # mirroring grid, ++ is the way to list addition
+    row ++ [second, first]
   end
 
+  @doc """
+  Converts a string list into integer list
+  """
   def converts_to_number(list) do
     for element <- list do
       {number, _rest} = Integer.parse(element)
       number
     end
   end
-
 end
