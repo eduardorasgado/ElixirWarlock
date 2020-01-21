@@ -11,13 +11,13 @@ defmodule Identicon do
   """
 
   @doc """
-  Main function that will assemble the pipe process
+  Main function that will assemble the pipeline process
   """
   def main(input) do
+    # even = color, #odd = white
     input 
     |> hash_input
-
-    # even = color, #odd = white
+    |> pick_color
   end
 
   @doc """
@@ -28,5 +28,23 @@ defmodule Identicon do
     |> :binary.bin_to_list
 
     %Identicon.Image{hex: hex}
+  end
+
+  @doc """
+  Function that takes first 3 elements from hex list and creates a 3 elements tuple
+  that will act like rgb color
+  This function returns a new Image struct with color assigned
+  We can do pattern matching directly into parenthesis in def statement, 
+  """
+  def pick_color(%Identicon.Image{ hex: hex_list } = input) do
+    [ red, green, blue | _tail ] = hex_list
+    # we use a pipe to assign elements from last struct to new one
+    %Identicon
+      .Image{
+        input | 
+        color: {red, 
+                green, 
+                blue}
+      }
   end
 end
