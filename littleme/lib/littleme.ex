@@ -12,6 +12,7 @@ defmodule Littleme do
     input
     |> hash_input
     |> pick_color
+    |> grid_generator
   end
 
   @doc """
@@ -30,6 +31,25 @@ defmodule Littleme do
   def pick_color(input) do
     [red, green, blue | _tail] = input.hex
 
-    %Littleme.Image{input | color: [red, green, blue]}
+    %Littleme.Image{input | color: {red, green, blue}}
+  end
+
+  @doc """
+  This function will create a list of 3 x 5 image grid but mirrored and inside a list
+  """
+  def grid_generator(%Littleme.Image{hex: hex} = input) do
+    grid =
+    Enum.chunk_every(hex, 3, 3, :discard)
+    |> Enum.map(&Littleme.mirror_row/1)
+
+    %Littleme.Image{input | grid: grid}
+  end
+
+  @doc """
+  Takes a 1 x 3 list and mirrors first and second element inside and returns it
+  """
+  def mirror_row(row) do
+    [first, second, _tail] = row
+    row ++ [second, first]
   end
 end
