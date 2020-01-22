@@ -21,6 +21,7 @@ defmodule Identicon do
     |> grid_constructor
     |> filter_odd_squares
     |> build_pixel_map
+    |> draw_square
   end
 
   @doc """
@@ -114,7 +115,7 @@ defmodule Identicon do
   every element in the list will represent colored grid in
   pixel map
 
-  300 x 300 identicon,
+  250 x 250 identicon,
   5 x 5 grid
   50 x 50 pxls individual grid
   """
@@ -132,5 +133,20 @@ defmodule Identicon do
     end
 
     %Identicon.Image{input | pixel_map: pixel_map}
+  end
+
+  @doc """
+  This function draws the identicon by itself
+  It will requirest color and pixel_map from Image struct
+  """
+  def draw_square(%Identicon.Image{color: color_list, pixel_map: pixel_map}) do
+    image = :egd.create(250, 250)
+    fill = :egd.color(color_list)
+
+    Enum.each pixel_map, fn({start, stop}) ->
+      :egd.filledRectangle(image, start, stop, fill)
+    end
+
+    :egd.render(image)
   end
 end
