@@ -19,13 +19,17 @@ defmodule Littleme do
   """
   def hash_input(input) do
     binary = :crypto.hash(:md5, input)
-    :erlang.binary_to_list(binary)
+    hex = :erlang.binary_to_list(binary)
+
+    %Littleme.Image{hex: hex}
   end
 
   @doc """
   This function will take first three elements from a list and will return a Image struct
   """
-  def pick_color([red, green, blue | _tail] = input) do
-    [red, green, blue]
+  def pick_color(input) do
+    [red, green, blue | _tail] = input.hex
+
+    %Littleme.Image{input | color: [red, green, blue]}
   end
 end
