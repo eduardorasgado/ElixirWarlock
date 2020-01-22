@@ -98,8 +98,13 @@ defmodule Identicon do
   This function will convert every even in color and every odd in
   white
   """
-  def filter_odd_squares(%Identicon.Image{grid: grid} = _input) do
-    colored_elements = List.flatten(grid)
-    |> Enum.filter(fn({value, _index} = x) -> rem(value, 2) == 0 end)
+  def filter_odd_squares(%Identicon.Image{grid: grid} = input) do
+
+    # we are performing a function for every list in grid
+    grid = Enum.filter grid, fn({value, _index}) ->
+        rem(value, 2) == 0
+    end
+
+    %Identicon.Image{input | grid: grid}
   end
 end
