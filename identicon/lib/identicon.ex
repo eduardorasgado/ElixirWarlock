@@ -19,6 +19,7 @@ defmodule Identicon do
     |> hash_input
     |> pick_color
     |> grid_constructor
+    |> filter_odd_squares
   end
 
   @doc """
@@ -91,5 +92,14 @@ defmodule Identicon do
   def converts_to_number(string_num) do
     {number, _rest} = Integer.parse(string_num)
     number
+  end
+
+  @doc """
+  This function will convert every even in color and every odd in
+  white
+  """
+  def filter_odd_squares(%Identicon.Image{grid: grid} = _input) do
+    colored_elements = List.flatten(grid)
+    |> Enum.filter(fn({value, _index} = x) -> rem(value, 2) == 0 end)
   end
 end
