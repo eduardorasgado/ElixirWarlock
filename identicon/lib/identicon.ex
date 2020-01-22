@@ -20,6 +20,7 @@ defmodule Identicon do
     |> pick_color
     |> grid_constructor
     |> filter_odd_squares
+    |> build_pixel_map
   end
 
   @doc """
@@ -106,5 +107,30 @@ defmodule Identicon do
     end
 
     %Identicon.Image{input | grid: grid}
+  end
+
+  @doc """
+  This function will create a the pixel map
+  every element in the list will represent colored grid in
+  pixel map
+
+  300 x 300 identicon,
+  5 x 5 grid
+  50 x 50 pxls individual grid
+  """
+  def build_pixel_map(%Identicon.Image{grid: grid} = input) do
+    pixel_map = Enum.map grid, fn({_value, index}) ->
+      # top left
+      horizontal = div(index, 5) * 50
+      vertical = rem(index, 5) * 50
+      #point
+      top_left = { horizontal, vertical }
+      bottom_right = {horizontal + 50, vertical + 50}
+
+      # pixel pairs
+      {top_left, bottom_right}
+    end
+
+    %Identicon.Image{input | pixel_map: pixel_map}
   end
 end
