@@ -8,10 +8,16 @@ defmodule Identicon do
   The full list will be match to first 3 x 5 grids from identicon, we will toos las element in list
   Even number will be a color grid, odd number in binary list will be white grid
   To complete the 5x5 grid identicon we will mirror first 2 columns
+
   """
 
   @doc """
   Main function that will assemble the pipeline process
+  ## Examples
+
+      iex> Identicon.main("Eduardo")
+      :ok
+
   """
   def main(input) do
     # even = color, #odd = white
@@ -22,6 +28,7 @@ defmodule Identicon do
     |> filter_odd_squares
     |> build_pixel_map
     |> draw_square
+    |> save_image(input)
   end
 
   @doc """
@@ -122,8 +129,8 @@ defmodule Identicon do
   def build_pixel_map(%Identicon.Image{grid: grid} = input) do
     pixel_map = Enum.map grid, fn({_value, index}) ->
       # top left
-      horizontal = div(index, 5) * 50
-      vertical = rem(index, 5) * 50
+      horizontal = rem(index, 5) * 50
+      vertical = div(index, 5) * 50
       #point
       top_left = { horizontal, vertical }
       bottom_right = {horizontal + 50, vertical + 50}
@@ -148,5 +155,13 @@ defmodule Identicon do
     end
 
     :egd.render(image)
+  end
+
+  @doc """
+  This function will take the binary and save to file system
+  It will save the image named it as input file name
+  """
+  def save_image(binary, filename) do
+    File.write("#{filename}.png", binary)
   end
 end
