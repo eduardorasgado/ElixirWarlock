@@ -13,6 +13,7 @@ defmodule Littleme do
     |> hash_input
     |> pick_color
     |> grid_generator
+    |> filter_odd_squares
   end
 
   @doc """
@@ -41,6 +42,8 @@ defmodule Littleme do
     grid =
     Enum.chunk_every(hex, 3, 3, :discard)
     |> Enum.map(&Littleme.mirror_row/1)
+    |> List.flatten
+    |> Enum.with_index
 
     %Littleme.Image{input | grid: grid}
   end
@@ -51,5 +54,16 @@ defmodule Littleme do
   def mirror_row(row) do
     [first, second, _tail] = row
     row ++ [second, first]
+  end
+
+  @doc """
+  This function filters a list of tuples, returns Image struct with a grid of just even tuples
+  """
+  def filter_odd_squares(%Littleme.Image{grid: grid} = input) do
+    even_grid = Enum.filter grid, fn({value, _index}) ->
+      rem(value, 2) == 0
+    end
+
+    %Littleme.Image{input | grid: even_grid}
   end
 end
