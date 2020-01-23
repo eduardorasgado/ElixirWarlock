@@ -34,10 +34,12 @@ config :logger, :console, format: "[$level] $message\n"
 config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
+# run: mix ecto.create for the first time
+# data base will be created
 config :discussapp, Discussapp.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
-  password: "postgres",
+  password: "Red$ew75vPBqAV4z",
   database: "discussapp_dev",
   hostname: "localhost",
   pool_size: 10
