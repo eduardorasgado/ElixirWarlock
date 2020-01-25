@@ -17,4 +17,12 @@ defmodule Discussapp.TopicController do
     # passing changeset as a custom variable, separated by commas
     render conn, "new.html", changeset: changeset
   end
+
+  @doc """
+  This function resolves for new topic creation
+  """
+  def create(conn, %{ "topic" => %{"title" => title} } = request) do
+    # getting data from request(params)
+    IO.inspect title
+  end
 end
