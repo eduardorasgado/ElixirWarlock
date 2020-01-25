@@ -14,6 +14,7 @@ defmodule Discussapp.TopicController do
     # we create a change set to merge this  with a form to
     # be able to create a new topic
     changeset = Topic.changeset %Topic{}, %{}
-    render conn, "new.html"
+    # passing changeset as a custom variable, separated by commas
+    render conn, "new.html", changeset: changeset
   end
 end

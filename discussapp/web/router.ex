@@ -31,6 +31,7 @@ defmodule Discussapp.Router do
     get "/", PageController, :index
     # method, action addess, controller, function in controller(convention)
     get "/topics/new", TopicController, :new
+    post "/topics", TopicController, :create
   end
 
   # Other scopes may use custom stacks.
