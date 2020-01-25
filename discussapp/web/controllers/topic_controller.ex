@@ -9,6 +9,6 @@ defmodule Discussapp.TopicController do
   This function handles the form to create a new topic
   """
   def new(conn, _params) do
-    "hello to create new topic"
+    #
   end
 end
