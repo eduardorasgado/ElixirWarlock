@@ -3,7 +3,7 @@ defmodule Discussapp.TopicController do
   # this is how to reduce code by avoid writing complete module names
   alias Discussapp.Topic
   @moduledoc """
-  By convention controller controller should be named as single element:
+  By convention, controller should be named as single element:
   TopicController and not TopicsController
   """
 
@@ -14,5 +14,6 @@ defmodule Discussapp.TopicController do
     # we create a change set to merge this  with a form to
     # be able to create a new topic
     changeset = Topic.changeset %Topic{}, %{}
+    render conn, "new.html"
   end
 end
