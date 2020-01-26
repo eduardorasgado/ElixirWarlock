@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
 
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/materialize.min.css") %>">
+    <%# This link is to be able to use materialize icons %>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
   </head>
 
