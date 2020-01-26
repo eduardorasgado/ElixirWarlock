@@ -33,15 +33,19 @@ defmodule Discussapp.TopicController do
   @doc """
   This function resolves for new topic creation
   """
-  def create(conn, %{ "topic" => %{"title" => title} } = request) do
+  def create(conn, %{ "topic" => %{"title" => title} } = _request) do
     # getting data from request(params)
     changeset = Topic.changeset %Topic{}, %{"title" => title}
 
     # we can use Repo struct because it was inserted into web.ex base controller fn
     # handling each one of the responses
+    # :info will make alert message apears in view thanks to some elixir
+    # eex helpers in web.templates.layout.app
     case Repo.insert(changeset) do
-       { :ok, post }->
-          IO.inspect post
+       { :ok, _post }->
+          conn
+          |> put_flash(:info, "Topic Successfully created")
+          |> redirect(to: topic_path(conn, :index))
        { :error, changeset } ->
           render conn, "new.html",changeset: changeset
     end
