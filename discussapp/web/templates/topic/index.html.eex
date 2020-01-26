@@ -9,7 +9,12 @@
         All topics available:
         
         <ul class="collection">
-            
+            <%# iterating using for loop inside eex notation %>
+            <%= for topic <- @topics do %>
+                <li class="collection-item">
+                    <a href=""><%= topic.title %></a>
+                </li>
+            <% end %>
         </ul>
     </div>
 </div>
