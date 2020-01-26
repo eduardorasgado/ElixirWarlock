@@ -23,6 +23,13 @@ defmodule Discussapp.TopicController do
   """
   def create(conn, %{ "topic" => %{"title" => title} } = request) do
     # getting data from request(params)
-    IO.inspect title
+    changeset = Topic.changeset %Topic{}, %{"title" => title}
+
+    # we can use Repo struct because it was inserted into web.ex base controller fn
+    # handling each one of the responses
+    case Repo.insert(changeset) do
+       { :ok, post }-> IO.inspect post
+       { :error, changeset } -> IO.inspect changeset
+    end
   end
 end
