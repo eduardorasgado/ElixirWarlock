@@ -28,8 +28,10 @@ defmodule Discussapp.TopicController do
     # we can use Repo struct because it was inserted into web.ex base controller fn
     # handling each one of the responses
     case Repo.insert(changeset) do
-       { :ok, post }-> IO.inspect post
-       { :error, changeset } -> IO.inspect changeset
+       { :ok, post }->
+          IO.inspect post
+       { :error, changeset } ->
+          render conn, "new.html",changeset: changeset
     end
   end
 end
