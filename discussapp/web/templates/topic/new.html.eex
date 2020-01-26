@@ -1,8 +1,11 @@
-<h1>Topics</h1>
+<h2>Topics</h2>
+<a href="/" class="btn btn-primary">Back home</a>
+<br><br>
 <div class="row">
   <div class="col-md-6">
     <div class="jumbotron">
       <h5>Create a new Topic</h5>
+      
       <%# phoenix template syntax,  create a form using a changeset, send it to create route in topic controller
         with this form_for is awaiting for a changeset variable and conn variable
       %>

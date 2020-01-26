@@ -11,7 +11,12 @@ defmodule Discussapp.TopicController do
   This function return a list of all topics registered by users
   """
   def index(conn, _params) do
-    #
+    # can see docs: https://hexdocs.pm/ecto/Ecto.Repo.html#c:all/2
+    #query = from topic in Topic, select: topic
+    #IO. inspect Repo.all(query)
+    # same thing to fetch all topics:
+    topics = Repo.all(Topic)
+    render conn, "index.html", topics: topics
   end
 
   @doc """
