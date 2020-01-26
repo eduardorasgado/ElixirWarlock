@@ -8,6 +8,13 @@ defmodule Discussapp.TopicController do
   """
 
   @doc """
+  This function return a list of all topics registered by users
+  """
+  def index(conn, _params) do
+    #
+  end
+
+  @doc """
   This function handles the form to create a new topic
   """
   def new(conn, _params) do
