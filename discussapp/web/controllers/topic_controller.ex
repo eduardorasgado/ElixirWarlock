@@ -50,4 +50,28 @@ defmodule Discussapp.TopicController do
           render conn, "new.html",changeset: changeset
     end
   end
+
+  @doc """
+  This method returns a form for specific id topic
+  """
+  def edit(conn, %{ "id" => topic_id }) do
+    # id should be same as named in route wildcard in router.ex
+    # changeset that is going to be showed in form
+    topic = Repo.get(Topic, topic_id)
+    # we are not passing second argument cuz changeset function has default params
+    changeset = Topic.changeset topic
+
+    # we should pass both changeset and topic even if topic is inside changeset
+    render conn, "edit.html", changeset: changeset, topic: topic
+  end
+
+  @doc """
+  This function save the new data of the topic user wants to update
+  """
+  def update(_conn, _params) do
+    IO.puts "++++++"
+    IO.puts "updating the topic"
+    IO.puts "++++++"
+    # saving data and redirecting user
+  end
 end

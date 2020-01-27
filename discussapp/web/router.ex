@@ -34,7 +34,7 @@ defmodule Discussapp.Router do
     post "/topics", TopicController, :create
     # this is called router wildcard: :id
     get "/topics/:id/edit", TopicController, :edit
-    put "/topics/:id/update", TopicController, :update
+    put "/topics/:id", TopicController, :update
   end
 
   # Other scopes may use custom stacks.
