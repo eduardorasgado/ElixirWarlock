@@ -1,7 +1,7 @@
 <h2>Topics</h2>
 <%= link to: topic_path(@conn, :index), class: "btn btn-secondary" do %>
   Back Home
-<%= end %>
+<% end %>
 <br><br>
 <div class="row">
   <div class="col-md-6">

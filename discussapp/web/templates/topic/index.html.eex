@@ -9,6 +9,9 @@
             <%= for topic <- @topics do %>
                 <li class="collection-item">
                     <a href=""><%= topic.title %></a>
+                    <%= link to: topic_path(@conn, :edit, topic), class: "btn btn-small waves-effect green" do %>
+                        Editar
+                    <% end %>
                 </li>
             <% end %>
         </ul>
@@ -19,6 +22,6 @@
     <%= link to: topic_path(@conn, :new), class: "btn-floating btn-large waves-effect waves-light red" do %>
         <%# material design library for icons, add is the name of the icon %>
         <i class="material-icons">add</i>
-    <%= end %>
+    <% end %>
     
 </div>
