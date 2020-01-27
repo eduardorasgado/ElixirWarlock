@@ -42,7 +42,7 @@ defmodule Discussapp.TopicController do
     # :info will make alert message apears in view thanks to some elixir
     # eex helpers in web.templates.layout.app
     case Repo.insert(changeset) do
-       { :ok, _post }->
+       { :ok, _topic }->
           conn
           |> put_flash(:info, "Topic Successfully created")
           |> redirect(to: topic_path(conn, :index))
@@ -68,10 +68,20 @@ defmodule Discussapp.TopicController do
   @doc """
   This function save the new data of the topic user wants to update
   """
-  def update(_conn, _params) do
-    IO.puts "++++++"
-    IO.puts "updating the topic"
-    IO.puts "++++++"
+  def update(conn, %{ "id" => topic_id, "topic" => topic }) do
     # saving data and redirecting user
+    # using pipe as it is elixir code
+    old_topic = Repo.get(Topic, topic_id)
+    changeset =  Topic.changeset old_topic, topic
+
+    case Repo.update(changeset) do
+      { :ok, _topic } ->
+        conn
+      |> put_flash(:info, "Topic Successfully updated")
+      |> redirect(to: topic_path(conn, :index))
+      { :error, changeset } ->
+        #returning the same we return in edit, error message for form is in changeset
+        render conn, "edit.html", changeset: changeset, topic: old_topic
+    end
   end
 end
