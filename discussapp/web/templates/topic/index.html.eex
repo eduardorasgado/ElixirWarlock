@@ -9,9 +9,12 @@
             <%= for topic <- @topics do %>
                 <li class="collection-item">
                     <a href=""><%= topic.title %></a>
-                    <%= link to: topic_path(@conn, :edit, topic), class: "btn btn-small waves-effect green" do %>
-                        Editar
-                    <% end %>
+                    <div class="right">
+                        <%= link to: topic_path(@conn, :edit, topic), class: "btn btn-small waves-effect" do %>
+                            Edit
+                            <i class="material-icons right">create</i>
+                        <% end %>
+                    </div>
                 </li>
             <% end %>
         </ul>

@@ -19,7 +19,10 @@
         </div>
 
         <%# For every form we should add a submit button but using eex template syntax %>
-        <%= submit "Save Topic", class: "btn btn-primary" %>
+        <%= submit class: "btn btn-primary" do %>
+          Save Topic
+          <i class="material-icons right">send</i>
+        <% end %>
       <% end %>
     </div>
   </div>
