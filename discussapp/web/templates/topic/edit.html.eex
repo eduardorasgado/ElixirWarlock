@@ -1,0 +1,23 @@
+<h2>Topics</h2>
+<%= link to: topic_path(@conn, :index), class: "btn btn-secondary" do %>
+  Back Home
+<% end %>
+<br><br>
+<div class="row">
+  <div class="col-md-6">
+    <div class="jumbotron">
+      <h5>Updating a topic</h5>
+
+      <%# update form is similar to new form but topic path params changes %>
+      <%= form_for @changeset, topic_path(@conn, :update, @topic), fn f -> %>
+        <div class="form-group">
+            <%# text input will be automatically populated because of f variable %>
+            <%= text_input f, :title, placeholder: "Title", class: "form-control" %>
+            <%= error_tag f, :title %>
+        </div>
+
+        <%=  submit "Update topic", class: "btn btn-primary"%>
+      <% end %>
+    </div>
+  </div>
+</div>
