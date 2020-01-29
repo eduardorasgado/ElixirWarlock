@@ -28,13 +28,17 @@ defmodule Discussapp.Router do
   scope "/", Discussapp do
     pipe_through :browser # Use the default browser stack
 
-    get "/", TopicController, :index
-    # method, action addess, controller, function in controller(convention)
-    get "/topics/new", TopicController, :new
-    post "/topics", TopicController, :create
-    # this is called router wildcard: :id
-    get "/topics/:id/edit", TopicController, :edit
-    put "/topics/:id", TopicController, :update
+    # get "/", TopicController, :index
+    # # method, action addess, controller, function in controller(convention)
+    # get "/topics/new", TopicController, :new
+    # post "/topics", TopicController, :create
+    # # this is called router wildcard: :id
+    # get "/topics/:id/edit", TopicController, :edit
+    # put "/topics/:id", TopicController, :update
+
+    # this will work if only we follow a restful convention
+    resources "/topics", TopicController
+
   end
 
   # Other scopes may use custom stacks.
