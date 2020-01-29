@@ -16,6 +16,7 @@ defmodule Discussapp.Mixfile do
   # Configuration for the OTP application.
   #
   # Type `mix help compile.app` for more information.
+  # UEBER AUTH AND GITHUB PROVIDER ADDED HERE, we configured these modules in config.exs
   def application do
     [mod: {Discussapp, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
@@ -29,6 +30,8 @@ defmodule Discussapp.Mixfile do
   # Specifies your project dependencies.
   #
   # Type `mix help deps` for examples and options.
+  # UEBER AUTH AND GITHUB PROVIDER ADDED HERE AND IN application function
+  # modules were configured in config.exs too
   defp deps do
     [{:phoenix, "~> 1.2.5"},
      {:phoenix_pubsub, "~> 1.0"},

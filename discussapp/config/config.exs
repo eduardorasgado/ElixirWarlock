@@ -25,3 +25,15 @@ config :logger, :console,
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
+
+# updating uberauth configuration by adding github as provider
+config :ueberauth, Ueberauth,
+  providers: [
+    github: { Ueberauth.Strategy.Github, [] }
+  ]
+
+# https://github.com/ueberauth/ueberauth_github
+# configuring github provider options(important data)
+config :ueberauth, Ueberauth.Strategy.Github.Oauth,
+  client_id: System.get_env("DISCUSSAPP_PHOENIX_CLIENT_ID"),
+  client_secret: System.get_env("DISCUSSAPP_PHOENIX_SECRET")
