@@ -14,6 +14,7 @@
                             Edit
                             <i class="material-icons right">create</i>
                         <% end %>
+                        <%# To send a delete method for the recognition of the action in header we should add a method inside eex %>
                         <%= link to: topic_path(@conn, :delete, topic), method: :delete, class: "btn btn-small waves-effect red" do %>
                             Delete
                             <i class="material-icons right">delete</i>
