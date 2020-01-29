@@ -84,4 +84,18 @@ defmodule Discussapp.TopicController do
         render conn, "edit.html", changeset: changeset, topic: old_topic
     end
   end
+
+  @doc """
+  This function deletes a topic given topic id
+  """
+  def delete(conn, %{"id" => topic_id}) do
+
+    # in case topic does not exists we will throw an error message
+    Repo.get!(Topic, topic_id)
+      |> Repo.delete!
+
+      conn
+        |> put_flash(:info, "Topic was deleted")
+        |> redirect(to: topic_path(conn, :index))
+  end
 end

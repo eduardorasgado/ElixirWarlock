@@ -37,6 +37,7 @@ defmodule Discussapp.Router do
     # put "/topics/:id", TopicController, :update
 
     # this will work if only we follow a restful convention
+    # when resouce helper is been used, wild card will be :id by default
     resources "/topics", TopicController
 
   end
