@@ -5,6 +5,7 @@ defmodule Discussapp.AuthController do
   """
   #the plug keyword is an elixir macro
   plug Ueberauth
+  alias Discussapp.User
 
   @doc """
   Handling any information that comes from github
@@ -16,7 +17,7 @@ defmodule Discussapp.AuthController do
         }}} = conn
 
     %{ token: user_token } = user_credentials
-    %{ email: user_email, name: user_name, nickname: user_nickname } = user_info
+    %{ email: user_email, name: _user_name, nickname: user_nickname } = user_info
     # another way to do this
     # user_param = %{ token: auth.credentials.token, email: auth.info.email, provider: user_provider}
 
@@ -25,13 +26,12 @@ defmodule Discussapp.AuthController do
                      username: user_nickname,
                      provider: user_provider }
 
-    IO.inspect "+++++++++"
-    IO.inspect "User provider: #{user_provider} |"<>
-              "User token: #{user_token} |" <>
-              "User email: #{user_email} |" <>
-              "User name: #{user_name} |" <>
-              "User nickname: #{user_nickname}"
-    IO.inspect "+++++++++"
+    changeset = User.changeset %User{}, user_params
+
+    case Repo.insert(changeset) do
+      { :ok, user } -> IO.inspect user
+      { :error, changeset } -> IO.inspect changeset
+    end
 
     #%Plug.Conn{adapter: {Plug.Adapters.Cowboy.Conn, :...}, assigns: %{ueberauth_auth: %Ueberauth.Auth{
     #  credentials: %Ueberauth.Auth.Credentials{expires: false, expires_at: nil, other: %{}, refresh_token: nil, scopes: ["public_repo", "user:email"], secret: nil, token: "58907eeb88274f672031fae12a5661116dc1bcf3", token_type: "Bearer"},
