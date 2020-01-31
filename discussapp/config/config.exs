@@ -32,7 +32,7 @@ config :ueberauth, Ueberauth,
     # to be able to take user email in callback ueberauth when signing up using github
     github: { Ueberauth.Strategy.Github, [
       #if we want to use full user data we should include "user, user:email"
-      default_scope: "user:email"
+      default_scope: "public_repo, user:email"
     ] }
   ]
 
