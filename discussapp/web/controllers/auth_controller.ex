@@ -9,15 +9,20 @@ defmodule Discussapp.AuthController do
   @doc """
   Handling any information that comes from github
   """
-  def callback(conn, _params) do
+  def callback(conn, %{"provider" => user_provider }) do
     %{assigns: %{ ueberauth_auth:
         %{credentials: user_credentials,
           info: user_info
         }}} = conn
 
-    IO.inspect user_credentials
+    %{ token: user_token } = user_credentials
+    %{ email: user_email, name: user_name, nickname: user_nickname } = user_info
     IO.inspect "+++++++++"
-    IO.inspect user_info
+    IO.inspect "User provider: #{user_provider} |"<>
+              "User token: #{user_token} |" <>
+              "User email: #{user_email} |" <>
+              "User name: #{user_name} |" <>
+              "User nickname: #{user_nickname}"
     IO.inspect "+++++++++"
 
     #%Plug.Conn{adapter: {Plug.Adapters.Cowboy.Conn, :...}, assigns: %{ueberauth_auth: %Ueberauth.Auth{
