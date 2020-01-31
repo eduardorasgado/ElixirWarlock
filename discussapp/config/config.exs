@@ -34,6 +34,6 @@ config :ueberauth, Ueberauth,
 
 # https://github.com/ueberauth/ueberauth_github
 # configuring github provider options(important data)
-config :ueberauth, Ueberauth.Strategy.Github.Oauth,
+config :ueberauth, Ueberauth.Strategy.Github.OAuth,
   client_id: System.get_env("DISCUSSAPP_PHOENIX_CLIENT_ID"),
   client_secret: System.get_env("DISCUSSAPP_PHOENIX_SECRET")

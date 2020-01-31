@@ -45,12 +45,12 @@ defmodule Discussapp.Router do
   end
 
   # urls related to user authentication
-  scope "/auth",Discussap do
+  scope "/auth",Discussapp do
     pipe_through :browser
 
     # ueber auth will provide a provider stradegy by loooking at request from user
     get "/:provider", AuthController, :request
-    get "/privider/callback", AuthController, :callback
+    get "/provider/callback", AuthController, :callback
   end
 
   # Other scopes may use custom stacks.
