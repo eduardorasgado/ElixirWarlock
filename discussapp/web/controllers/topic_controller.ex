@@ -16,6 +16,8 @@ defmodule Discussapp.TopicController do
     #IO. inspect Repo.all(query)
     # same thing to fetch all topics:
     topics = Repo.all(Topic)
+    # returning the map of all topics elements but reversed
+    topics = Enum.reverse topics
     render conn, "index.html", topics: topics
   end
 
@@ -94,8 +96,8 @@ defmodule Discussapp.TopicController do
     Repo.get!(Topic, topic_id)
       |> Repo.delete!
 
-      conn
-        |> put_flash(:info, "Topic was deleted")
-        |> redirect(to: topic_path(conn, :index))
+    conn
+      |> put_flash(:info, "Topic was deleted")
+      |> redirect(to: topic_path(conn, :index))
   end
 end
