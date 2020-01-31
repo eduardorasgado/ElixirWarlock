@@ -13,6 +13,8 @@ defmodule Discussapp.Router do
   """
   use Discussapp.Web, :router
 
+  # a pipeline that defines a controller to do some amount of pre proccesings
+  # before handle a request
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -25,6 +27,7 @@ defmodule Discussapp.Router do
     plug :accepts, ["json"]
   end
 
+  # a scope keyword is for namespacing urls in phoenix
   scope "/", Discussapp do
     pipe_through :browser # Use the default browser stack
 
@@ -39,7 +42,15 @@ defmodule Discussapp.Router do
     # this will work if only we follow a restful convention
     # when resouce helper is been used, wild card will be :id by default
     resources "/topics", TopicController
+  end
 
+  # urls related to user authentication
+  scope "/auth",Discussap do
+    pipe_through :browser
+
+    # ueber auth will provide a provider stradegy by loooking at request from user
+    get "/:provider", AuthController, :request
+    get "/privider/callback", AuthController, :callback
   end
 
   # Other scopes may use custom stacks.
