@@ -29,7 +29,11 @@ import_config "#{Mix.env}.exs"
 # updating uberauth configuration by adding github as provider
 config :ueberauth, Ueberauth,
   providers: [
-    github: { Ueberauth.Strategy.Github, [] }
+    # to be able to take user email in callback ueberauth when signing up using github
+    github: { Ueberauth.Strategy.Github, [
+      #if we want to use full user data we should include "user, user:email"
+      default_scope: "user:email"
+    ] }
   ]
 
 # https://github.com/ueberauth/ueberauth_github

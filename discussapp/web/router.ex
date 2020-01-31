@@ -50,7 +50,7 @@ defmodule Discussapp.Router do
 
     # ueber auth will provide a provider stradegy by loooking at request from user
     get "/:provider", AuthController, :request
-    get "/provider/callback", AuthController, :callback
+    get "/:provider/callback", AuthController, :callback
   end
 
   # Other scopes may use custom stacks.
