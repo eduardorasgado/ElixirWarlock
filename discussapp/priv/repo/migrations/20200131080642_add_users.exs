@@ -10,6 +10,7 @@ defmodule Discussapp.Repo.Migrations.AddUsers do
     # remember that create here is a macro
     create table(:users) do
       add :email, :string
+      add :username, :string
       # keep tracking,  who do they originally sign in with
       add :provider, :string
       add :token, :string

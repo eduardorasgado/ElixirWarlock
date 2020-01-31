@@ -6,6 +6,7 @@ defmodule Discussapp.User do
   """
   schema "users" do
     field :email, :string
+    field :username, :string
     field :provider, :string
     field :token, :string
     timestamps() # timestamps does not need to have specifications
@@ -17,9 +18,11 @@ defmodule Discussapp.User do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [ :email,
+                      :username,
                       :provider,
                       :token ])
     |> validate_required([ :email,
+                           :username,
                            :provider,
                            :token ])
   end

@@ -17,6 +17,14 @@ defmodule Discussapp.AuthController do
 
     %{ token: user_token } = user_credentials
     %{ email: user_email, name: user_name, nickname: user_nickname } = user_info
+    # another way to do this
+    # user_param = %{ token: auth.credentials.token, email: auth.info.email, provider: user_provider}
+
+    user_params = %{ token: user_token,
+                     email: user_email,
+                     username: user_nickname,
+                     provider: user_provider }
+
     IO.inspect "+++++++++"
     IO.inspect "User provider: #{user_provider} |"<>
               "User token: #{user_token} |" <>
