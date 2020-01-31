@@ -9,6 +9,7 @@ defmodule Discussapp.Repo.Migrations.AddTopics do
   """
 
   def change do
+    # remember that create here is a macro
     # new table named 'topics', it will have a title and a string column
     create table(:topics) do
       add :title, :string

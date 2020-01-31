@@ -1,5 +1,8 @@
 defmodule Discussapp.Router do
   @moduledoc """
+  The project was created by typing:
+  $mix phoenix.new Discussapp
+
   Guide to all the conventions to route with phoenix:
 
   user_path  GET     /users           HelloWeb.UserController :index
