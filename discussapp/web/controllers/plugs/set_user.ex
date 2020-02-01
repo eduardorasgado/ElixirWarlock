@@ -16,6 +16,8 @@ defmodule Discussapp.Plugs.SetUser do
   In a module plug we have two functions that are important
   init -> do some setup
   call -> called with a 'conn', must return a conn
+
+  After writing the entire plug we just have to use it into our router module
   """
   import Plug.Conn
   import Phoenix.Controller

@@ -69,6 +69,8 @@ defmodule Discussapp.AuthController do
       # { :ok, user } or { error, changeset }
       nil -> Repo.insert changeset
       # if user was found then we can signin him
+      # TODO: Analize what is going on with user token when revoking from github and tries
+      # to sign in
       user -> { :ok, user }
     end
   end
