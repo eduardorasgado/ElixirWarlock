@@ -26,6 +26,9 @@ defmodule Discussapp.AuthController do
                      username: user_nickname,
                      provider: user_provider }
 
+    # basically if user tries to signin and it is not inside db
+    # user will be created. If user is already inside of the db
+    # it will redirect to its account
     signin(conn, User.changeset(%User{}, user_params))
 
     #%Plug.Conn{adapter: {Plug.Adapters.Cowboy.Conn, :...}, assigns: %{ueberauth_auth: %Ueberauth.Auth{
@@ -41,8 +44,13 @@ defmodule Discussapp.AuthController do
   # this function is to be able to signin our user
   defp signin(conn, changeset) do
     case insert_or_update_user(changeset) do
-      # success
-      { :ok, user } -> IO.inspect user
+      # success signin
+      { :ok, user } ->
+        conn
+        |> put_flash(:info, "Welcome back #{user.username}!")
+        # sending elements inside cockies for user browser
+        |> put_session(:user_id, user.id)
+        |> redirect(to: topic_path(conn, :index))
       # something wrong, user fails to signin
       { :error, _reason } ->
         conn
@@ -59,6 +67,7 @@ defmodule Discussapp.AuthController do
     case (Repo.get_by User, email: changeset.changes.email) do
       # if user was not found into db we will add it
       nil -> Repo.insert changeset
+      # if user was found then we can signin him
       user -> { :ok, user }
     end
   end
