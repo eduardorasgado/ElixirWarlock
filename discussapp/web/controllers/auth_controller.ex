@@ -26,12 +26,7 @@ defmodule Discussapp.AuthController do
                      username: user_nickname,
                      provider: user_provider }
 
-    changeset = User.changeset %User{}, user_params
 
-    case Repo.insert(changeset) do
-      { :ok, user } -> IO.inspect user
-      { :error, changeset } -> IO.inspect changeset
-    end
 
     #%Plug.Conn{adapter: {Plug.Adapters.Cowboy.Conn, :...}, assigns: %{ueberauth_auth: %Ueberauth.Auth{
     #  credentials: %Ueberauth.Auth.Credentials{expires: false, expires_at: nil, other: %{}, refresh_token: nil, scopes: ["public_repo", "user:email"], secret: nil, token: "58907eeb88274f672031fae12a5661116dc1bcf3", token_type: "Bearer"},
@@ -43,4 +38,15 @@ defmodule Discussapp.AuthController do
     #0, 1}
   end
 
+  # This function insert a user if not already exists into our app,
+  # and Qif this user exists it will update the user token
+  # private functions cannot be used in another modules
+  defp insert_or_update_user(changeset) do
+    # returns a single element looking for options
+    case (Repo.get_by User, email: changeset.changes.email) do
+      # if user was not found into db we will add it
+      nil -> Repo.insert changeset
+      user -> { :ok, user }
+    end
+  end
 end
