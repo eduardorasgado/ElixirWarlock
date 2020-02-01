@@ -19,6 +19,8 @@ defmodule Discussapp.Router do
   # a pipeline that defines a controller to do some amount of pre proccesings
   # before handle a request
   pipeline :browser do
+    # a plug is a function that makes a tiny transformation to our connection object
+    # every connection we do and controllers do is a plug
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash

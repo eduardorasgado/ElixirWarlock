@@ -65,7 +65,8 @@ defmodule Discussapp.AuthController do
   defp insert_or_update_user(changeset) do
     # returns a single element looking for options
     case (Repo.get_by User, email: changeset.changes.email) do
-      # if user was not found into db we will add it
+      # if user was not found into db we will add it and then it will return a
+      # { :ok, user } or { error, changeset }
       nil -> Repo.insert changeset
       # if user was found then we can signin him
       user -> { :ok, user }
