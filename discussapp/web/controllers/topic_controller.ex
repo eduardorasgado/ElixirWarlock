@@ -12,10 +12,14 @@ defmodule Discussapp.TopicController do
   """
   def index(conn, _params) do
     # can see docs: https://hexdocs.pm/ecto/Ecto.Repo.html#c:all/2
-    #query = from topic in Topic, select: topic
-    #IO. inspect Repo.all(query)
-    # same thing to fetch all topics:
-    topics = Repo.all(Topic)
+    # topics = Repo.all(Topic)
+    # same thing to fetch all topics, but ordered by id(postgres by default does not have
+    # an order in tables):
+    query = from topic in Topic,
+            select: topic,
+            order_by: topic.id
+
+    topics = Repo.all(query)
     # returning the map of all topics elements but reversed
     topics = Enum.reverse topics
     render conn, "index.html", topics: topics
