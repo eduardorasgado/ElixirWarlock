@@ -22,7 +22,7 @@ defmodule Discussapp.Plugs.SetUser do
 
   alias Discussapp.Repo
   alias Discussapp.User
-  alias Discussapp.Router.Helpers
+  # alias Discussapp.Router.Helpers
 
   @doc """
   Function to create some initial setup
@@ -39,6 +39,24 @@ defmodule Discussapp.Plugs.SetUser do
   This function will be called when a connection is been manipulated
   """
   def call(conn, _params) do
-    conn
+    user_id = get_session(conn, :user_id)
+
+    # cond statement evaluates the statement corresponding to the first clause
+    # that evaluates to a truthy value
+    # cond evaluates all the statement list, the first one that returns true will
+    # execute the clause in it
+    cond do
+      # user will be user_id if this value is falsy,
+      # if user_id is truthy then it will assign Repo.get to user
+      # NOTE: this does not work as true && true = true, true && false = false
+      user = user_id && Repo.get(User, user_id) ->
+        # we assign to the connection, dont use put_session function
+        conn
+        |> assign(:user, user)
+      # if above fails then just execute next, (user is not logged)
+      true ->
+        conn
+        |> assign(:user, nil)
+    end
   end
 end
