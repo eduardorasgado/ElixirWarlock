@@ -15,7 +15,12 @@ defmodule Solution do
         element |> String.to_integer()
       end)
 
-    buy(list ++ [0])
+    [ p, d, m, s ] = list
+    if m < p do
+      buy(list ++ [0])
+    else
+
+    end
   end
 
   defp buy([p, d, m, s, amount]) do
@@ -50,3 +55,5 @@ end
 Solution.main("20 3 6 80")
 # correct is 7
 Solution.main("20 3 6 85")
+# correct is 29
+Solution.main("89 91 26 840")
