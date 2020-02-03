@@ -1,7 +1,7 @@
 <h5>Welcome!</h5>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-8">
         All topics available:
         
         <ul class="collection">
@@ -9,17 +9,21 @@
             <%= for topic <- @topics do %>
                 <li class="collection-item">
                     <a href=""><%= topic.title %></a>
-                    <div class="right">
-                        <%= link to: topic_path(@conn, :edit, topic), class: "btn btn-small waves-effect" do %>
-                            Edit
-                            <i class="material-icons right">create</i>
-                        <% end %>
-                        <%# To send a delete method for the recognition of the action in header we should add a method inside eex %>
-                        <%= link to: topic_path(@conn, :delete, topic), method: :delete, class: "btn btn-small waves-effect red" do %>
-                            Delete
-                            <i class="material-icons right">delete</i>
-                        <% end %>
-                    </div>
+                    <%= if @conn.assigns.user.id == topic.user_id do %>
+                        <div class="right">
+                            <span class="new badge" data-badge-caption="">author</span>
+                            <%= link to: topic_path(@conn, :edit, topic), class: "btn btn-small waves-effect" do %>
+                                Edit
+                                <i class="material-icons right">create</i>
+                            <% end %>
+                            <%# To send a delete method for the recognition of the action in header we should add a method inside eex %>
+                            <%= link to: topic_path(@conn, :delete, topic), method: :delete, class: "btn btn-small waves-effect red" do %>
+                                Delete
+                                <i class="material-icons right">delete</i>
+                            <% end %>
+                        </div>
+                    <% end %>
+                
                 </li>
             <% end %>
         </ul>
