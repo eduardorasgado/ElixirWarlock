@@ -7,6 +7,11 @@ defmodule Discussapp.TopicController do
   TopicController and not TopicsController
   """
 
+  # plug this controller, when clause is called a GUARD
+  # it let coder defines where to apply this plug
+  plug Discussapp.Plugs.RequireAuth
+    when action in [:new, :create, :edit, :update, :delete]
+
   @doc """
   This function return a list of all topics registered by users
   """

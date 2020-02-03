@@ -1,16 +1,19 @@
-defmodule Discuss.Plugs.RequireAuth do
+defmodule Discussapp.Plugs.RequireAuth do
   import Plug.Conn
-  import Discussapp.Router.Helpers
   import Phoenix.Controller
+  alias Discussapp.Router.Helpers
   @moduledoc """
   This module Plug controls the access to some certain routes
   once the user has signin our application
+
+  IMPORTANT:
+  This plug only happens after the router
   """
 
   @doc """
   Executed for expensive operations
   """
-  def init _params do
+  def init(_params) do
   end
 
   @doc """
@@ -24,7 +27,7 @@ defmodule Discuss.Plugs.RequireAuth do
       true ->
         conn
         |> put_flash(:error, "You must be logged in")
-        |> redirect(to: topic_path(conn, :index))
+        |> redirect(to: Helpers.topic_path(conn, :index))
         # module plugs are slighly different than phoenix common plugs
         # so it is not enough with just redirect cuz from this plug it should
         # tell to phoenix, this conn is done for, passing the connection to halt
