@@ -25,9 +25,12 @@
         </a>
         <ul class="right">
           <%= if @conn.assigns[:user] do %>
-            <li>Logout</li>
+            <li>
+              Logout
+            </li>
           <% else %>
             <li>
+              <%# authentication button %>
               <%= link "Signin with github", to: auth_path(@conn, :request, "github") %>
             </li>
           <% end %>

@@ -41,7 +41,21 @@ defmodule Discussapp.AuthController do
     #0, 1}
   end
 
+  @doc """
+  Defines all the system action when user logs out of the application
+  """
+  def signout(conn, _params) do
+    # unset user id from session in conn assigns
+    conn
+    # slighly better convention than using put_session(:user_id, nil) in a security way
+    # configure_session will remove any session or data
+    # in case we have any other propery beside user id it will drop out of the window
+    |> configure_session(drop: true)
+    |> redirect(to: topic_path(conn, :index))
+  end
+
   # this function is to be able to signin our user
+  # this function is used by auth controller callback function
   defp signin(conn, changeset) do
     case insert_or_update_user(changeset) do
       # success signin
