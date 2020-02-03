@@ -9,22 +9,65 @@ defmodule Solution do
     if minutes are 30 -> half
   """
   #Enter your code here. Read input from STDIN. Print output to STDOUT
-  defp solution a, b do
+  defp solution h_string, m_string do
+    h = h_string |> String.to_integer
+    m = m_string |> String.to_integer
 
-    get_hours |> Enum.map(fn({w, n}) ->
-      IO.puts "#{w} -> #{n}"
-    end)
-    5
+    IO.inspect get_minutes()
+    cond do
+      m == 0 ->
+
+        "#{Enum.at(get_hours(), h-1)} o' clock"
+      m >= 1 && m <= 30 ->
+        "shit"
+      m > 30 ->
+        "shit 2"
+    end
+  end
+
+  defp get_elementals do
+    [ "one", "two", "three", "four", "five", "six",
+    "seven", "eight", "nine" ]
   end
 
   defp get_hours do
-    ["one", "two", "three", "four", "five", "six",
-    "seven", "eight", "nine", "ten", "eleven", "twelve"]
-    |> Enum.with_index(1)
+    # this creates a map of index words based on a list with indexes
+    #["one", "two", "three", "four", "five", "six",
+    #"seven", "eight", "nine", "ten", "eleven", "twelve"]
+    #|> Enum.with_index(1)
+    #|> Enum.map(fn({w, i})->
+    #  {i, w}
+    #end) |> Map.new
+    get_elementals() ++ ["ten", "eleven", "twelve"]
+
   end
 
-  def main(a, b) do
-    solution(a, b) |> IO.puts
+  defp get_minutes do
+    get_hours() ++ String.split("thirteen fourteen quarter sixteen seventeen eighteen nineteen", " ")
+    |> add_dec("twenty")
+    |> add_dec("thirty")
+    |> add_dec("fourty")
+    |> add_dec("fifty")
+    |> Enum.map(fn(element) ->
+      cond do
+        element == "thirty" -> "half"
+        true -> element
+      end
+    end)
+  end
+
+  @doc """
+  Inserting elements from a ten beginning and last nineth element
+  Start by ten base and add next ten - one, ten - two, etc
+  """
+  defp add_dec(list, dec) do
+    List.insert_at(list, -1, dec) ++ Enum.map(get_elementals(), fn(element) ->
+      "#{dec} #{element}"
+    end)
+  end
+
+  def main(h, m) do
+    solution(h, m) |> IO.puts
   end
 end
 
@@ -36,3 +79,6 @@ Solution.main("3", "00")
 
 # correct is: quarter past seven
 Solution.main("7", "15")
+
+# correct is: half past five
+Solution.main("5", "30")
