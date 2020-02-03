@@ -10,19 +10,22 @@ defmodule Solution do
   """
   #Enter your code here. Read input from STDIN. Print output to STDOUT
   defp solution h_string, m_string do
-    h = h_string |> String.to_integer
-    m = m_string |> String.to_integer
-
-    IO.inspect get_minutes()
+    m = m_string
+    |> String.to_integer
+    minute = searching_element_in_time(m, get_minutes())
+    hour = h_string |> String.to_integer |> searching_element_in_time(get_hours())
     cond do
       m == 0 ->
-
-        "#{Enum.at(get_hours(), h-1)} o' clock"
+        "#{hour} o' clock"
       m >= 1 && m <= 30 ->
-        "shit"
+        "#{minute} past #{hour}"
       m > 30 ->
-        "shit 2"
+        "#{minute} minutes to #{hour}"
     end
+  end
+
+  defp searching_element_in_time e, list do
+    Enum.at(list, e - 1)
   end
 
   defp get_elementals do
