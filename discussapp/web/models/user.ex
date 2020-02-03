@@ -9,6 +9,9 @@ defmodule Discussapp.User do
     field :username, :string
     field :provider, :string
     field :token, :string
+    # defining the user - topics model relation
+    # if we define the relation here, the same should be in topic model, but belongs to rel
+    has_many :topics, Discussapp.Topic
     timestamps() # timestamps does not need to have specifications
   end
 

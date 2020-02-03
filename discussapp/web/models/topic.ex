@@ -7,6 +7,8 @@ defmodule Discussapp.Topic do
   """
   schema "topics" do
     field :title, :string
+    # defining two direction relation is critical to define a relation with ecto
+    belongs_to :user_id, Discussapp.User
   end
 
   @doc """
