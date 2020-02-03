@@ -44,9 +44,22 @@ defmodule Discussapp.TopicController do
   @doc """
   This function resolves for new topic creation
   """
-  def create(conn, %{ "topic" => %{"title" => title} } = _request) do
+  def create(conn, %{ "topic" => topic } = _request) do
     # getting data from request(params)
-    changeset = Topic.changeset %Topic{}, %{"title" => title}
+    # to assign the topic relation we should get the user by conn.assigns[:user]
+    # topic without user association
+    # changeset = Topic.changeset %Topic{}, topic
+
+    # getting the user associated to it
+    # see how build_assoc works https://hexdocs.pm/ecto/Ecto.html#build_assoc/3
+    # getting a %User{}
+    changeset = conn.assigns[:user]
+      #build_assoc(actual_user, topics table)
+      # this produce a topic struct %Topic{data, user_id: 2}
+      |> build_assoc(:topics)
+      # changeset(%Topic{}, topic) where topic struct has already the user_id
+      # and topic is the topic data from params
+      |> Topic.changeset(topic)
 
     # we can use Repo struct because it was inserted into web.ex base controller fn
     # handling each one of the responses
