@@ -37,7 +37,7 @@ defmodule Discussapp.Router do
   scope "/", Discussapp do
     pipe_through :browser # Use the default browser stack
 
-    # get "/", TopicController, :index
+    get "/", TopicController, :index
     # # method, action addess, controller, function in controller(convention)
     # get "/topics/new", TopicController, :new
     # post "/topics", TopicController, :create
