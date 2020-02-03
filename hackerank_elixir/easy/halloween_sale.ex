@@ -19,7 +19,7 @@ defmodule Solution do
     if m < p do
       buy(list ++ [0])
     else
-
+      0
     end
   end
 
@@ -32,7 +32,7 @@ defmodule Solution do
         # if cost has not arrived to minimun cost
         s_new = s - p
 
-        if p > m do
+        if p > m && p - d > 0 do
           buy([p - d, d, m, s_new, amount])
         else
           buy([m, d, m, s_new, amount])
