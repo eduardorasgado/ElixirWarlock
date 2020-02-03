@@ -8,7 +8,9 @@ defmodule Discussapp.Topic do
   schema "topics" do
     field :title, :string
     # defining two direction relation is critical to define a relation with ecto
-    belongs_to :user_id, Discussapp.User
+    # ecto will create the user_id using the model_id syntax
+    # note that user is not in plural because it not means for db schema
+    belongs_to :user, Discussapp.User
   end
 
   @doc """
