@@ -20,7 +20,7 @@ defmodule Discussapp.Plugs.SetUser do
   After writing the entire plug we just have to use it into our router module
   """
   import Plug.Conn
-  import Phoenix.Controller
+  # import Phoenix.Controller
 
   alias Discussapp.Repo
   alias Discussapp.User
