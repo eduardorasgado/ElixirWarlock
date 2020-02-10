@@ -8,11 +8,17 @@ defmodule Solution do
   def get_test_amount do
     IO.gets("") |> String.strip |> String.to_integer
   end
-  @doc """
-  Represents the algorithm to solve the problem
-  """
-  defp solution() do
 
+  # Represents the algorithm to solve the problem
+  # n = money to spend
+  # c = chocolate value
+  # m = wrappers needed to change
+  defp solution([n, c, m, bar_amount]) do
+    cond do
+      n > 0 && n >= c ->
+        solution([n-1, c, m, bar_amount + 1])
+      true -> bar_amount
+    end
   end
 
   @doc """
@@ -30,12 +36,18 @@ defmodule Solution do
   @doc """
   Main function for dev environment
   """
-  def main_dev([n, c, m]) do
-    IO.inspect n
+  def main_dev(list) do
+    solution(list ++ [ 0 ]) |> IO.puts
   end
 end
 # hackerrank main
 #Solution.main()
 
-
-Solution.main([7, 3, 2])
+# correct: 3
+Solution.main_dev([7, 3, 2])
+# correct: 6
+Solution.main_dev([10, 2, 5])
+# correct: 3
+Solution.main_dev([12, 4, 4])
+# correct: 5
+Solution.main_dev([6, 2, 2])
