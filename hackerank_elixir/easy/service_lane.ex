@@ -31,6 +31,26 @@ defmodule Solution do
     end)
   end
 
+  @doc """
+  algorithm dev environment for dev only
+    8 5
+    2 3 1 2 3 2 3 3
+    0 3
+    4 6
+    6 7
+    3 5
+    0 7
+  """
+  def main_dev([n, t], width_list, test_list) do
+    Enum.each(test_list, fn([i, j]) ->
+      IO.puts "#{i} #{j}"
+    end)
+  end
+
+  defp solution([]) do
+
+  end
+
   defp get_stdin do
     IO.gets("")
       |> String.strip
@@ -41,4 +61,14 @@ defmodule Solution do
   end
 end
 
-Solution.main()
+#Solution.main()
+
+# correct: 1 2 3 2 1
+Solution.main_dev [8, 5], [2, 3, 1, 2, 3, 2, 3, 3],
+  [
+    [0, 3],
+    [4, 6],
+    [6, 7],
+    [3, 5],
+    [0, 7]
+  ]
