@@ -27,10 +27,16 @@ defmodule Solution do
   Get the t entry from the user
   """
   def main do
-
     1..get_test_amount() |> Enum.each(fn(_element) ->
-      [n, c, m] = IO.gets("") |> String.strip |> String.split(" ")
-      IO.puts n
+      [n, c, m] = IO.gets("")
+        |> String.strip
+        |> String.split(" ")
+        |> Enum.map(fn(e) ->
+            # converting the string elements in list to integers
+            String.to_integer(e)
+        end)
+
+      IO.puts solution([n, c, m, 0])
     end)
   end
 
