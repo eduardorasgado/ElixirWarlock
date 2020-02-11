@@ -19,6 +19,26 @@ defmodule Solution do
   where j-th is the end index of the segment been considered
   """
   def main do
+    [n, t] = get_stdin()
+    width_list = get_stdin()
 
+    #IO.puts "#{n} #{t}"
+
+    1..t |> Enum.each(fn(_e) ->
+      # for every given test case
+      [i, j] = get_stdin()
+      IO.puts "#{i} #{j}"
+    end)
+  end
+
+  defp get_stdin do
+    IO.gets("")
+      |> String.strip
+      |> String.split(" ")
+      |> Enum.map(fn(e) ->
+        String.to_integer(e)
+      end)
   end
 end
+
+Solution.main()
