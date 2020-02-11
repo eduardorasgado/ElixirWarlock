@@ -10,19 +10,21 @@ defmodule Solution do
   def main do
     [n, t] = get_stdin()
     width_list = get_stdin()
+    range_min = Enum.min(n..1000)
 
     cond do
       n < 2 && n > 100000 -> nil
       t < 1 && t > 1000 -> nil
       !testing_with_k(width_list, n-1, true) -> nil
       true ->
+        width_list_windex = Enum.with_index(width_list)
         1..t |> Enum.each(fn(_e) ->
           # for every given test case
           [i, j] = get_stdin()
           cond do
             0 <= i && i < j &&  j < n && 2<= (j - i + 1)
-                  && (j - i + 1) <= Enum.min(n..1000) ->
-              IO.puts solution(n, width_list, i, j)
+                  && (j - i + 1) <= range_min ->
+              IO.puts solution(n, width_list_windex, i, j)
             true -> nil
           end
         end)
@@ -44,16 +46,18 @@ defmodule Solution do
   """
   def main_dev [n, t], width_list, test_list do
     # for every test case
+    range_min = Enum.min(n..1000)
     cond do
-      n < 2 && n > 100000 -> nil
-      t < 1 && t > 1000 -> nil
+      n < 2 || n > 100000 -> nil
+      t < 1 || t > 1000 -> nil
       !testing_with_k(width_list, n-1, true) -> nil
       true ->
+        width_list_windex = Enum.with_index(width_list)
         Enum.each(test_list, fn([i, j]) ->
           cond do
             0 <= i && i < j &&  j < n && 2<= (j - i + 1)
-                  && (j - i + 1) <= Enum.min(n..1000) ->
-              IO.puts solution(n, width_list, i, j)
+                  && (j - i + 1) <= range_min ->
+              IO.puts solution(n, width_list_windex, i, j)
             true -> nil
           end
         end)
@@ -62,7 +66,7 @@ defmodule Solution do
 
   defp solution _n, width_list, i_start, j_end do
     # getting the max width for every test
-    Enum.with_index(width_list)
+    width_list
     |> Enum.filter(fn({_width, index}) ->
       index >= i_start && index <= j_end
     end)
@@ -76,9 +80,7 @@ defmodule Solution do
     IO.gets("")
       |> String.strip
       |> String.split(" ")
-      |> Enum.map(fn(e) ->
-        String.to_integer(e)
-      end)
+      |> Enum.map(&String.to_integer/1)
   end
 
   defp testing_with_k(width_list, n, value) do
