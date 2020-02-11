@@ -16,8 +16,9 @@ defmodule Solution do
   defp solution([n, c, m, bar_amount]) do
     cond do
       n > 0 && n >= c ->
-        solution([n-1, c, m, bar_amount + 1])
-      true -> bar_amount
+        new_bar_amount = if rem(bar_amount, m) == 0, do: 1, else: 0
+        solution([n-c, c, m, bar_amount + 1 + new_bar_amount])
+      true -> bar_amount - 1
     end
   end
 
