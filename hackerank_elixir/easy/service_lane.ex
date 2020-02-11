@@ -11,14 +11,22 @@ defmodule Solution do
     [n, t] = get_stdin()
     width_list = get_stdin()
 
-    #IO.puts "#{n} #{t}"
-
-    1..t |> Enum.each(fn(_e) ->
-      # for every given test case
-      [i, j] = get_stdin()
-      # IMPLEMENTATION SHOULD GO HERE
-      IO.puts "#{i} #{j}"
-    end)
+    cond do
+      n < 2 && n > 100000 -> nil
+      t < 1 && t > 1000 -> nil
+      !testing_with_k(width_list, n-1, true) -> nil
+      true ->
+        1..t |> Enum.each(fn(_e) ->
+          # for every given test case
+          [i, j] = get_stdin()
+          cond do
+            0 <= i && i < j &&  j < n && 2<= (j - i + 1)
+                  && (j - i + 1) <= Enum.min(n..1000) ->
+              IO.puts solution(n, width_list, i, j)
+            true -> nil
+          end
+        end)
+    end
   end
 
   @doc """
@@ -52,7 +60,7 @@ defmodule Solution do
     end
   end
 
-  defp solution n, width_list, i_start, j_end do
+  defp solution _n, width_list, i_start, j_end do
     # getting the max width for every test
     Enum.with_index(width_list)
     |> Enum.filter(fn({_width, index}) ->
