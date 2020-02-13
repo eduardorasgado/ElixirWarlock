@@ -42,8 +42,16 @@ defmodule Solution do
   end
 
   defp solution([total_cities, num_cities_with_sst], cities_with_sst) do
-    mid = div(total_cities, 2)
+    get_closest_stations(total_cities, cities_with_sst)
 
+  end
+
+  defp get_closest_stations(total_cities, cities_with_sst) do
+    0..total_cities-1
+    |> Enum.map(fn(city) ->
+      {city, 0, Enum.member?(cities_with_sst, city)}
+    end)
+    |> IO.inspect
   end
 end
 
