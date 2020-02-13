@@ -71,13 +71,10 @@ defmodule Solution do
         true ->
           # here we should get the nearest station
           # expanding cities_with_sst to {city, difference between c_W_sst and currect city analized}
-          {_c_w_sst, nearest_distance} = Enum.map(cities_with_sst, fn(c) ->
-            {c, abs(cty - c)}
+          Enum.map(cities_with_sst, fn(c) ->
+            abs(cty - c)
           end)
-          |> Enum.min_by(fn({_c, diff})->
-            diff
-          end)
-          nearest_distance
+          |> Enum.min
       end
     end)
   end
