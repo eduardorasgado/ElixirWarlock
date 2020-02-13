@@ -9,29 +9,10 @@ defmodule SplitStrings do
   """
   def solution(str_s) do
     # Your code here
-    str = str_s
-    |> String.split("")
-    |> Enum.filter(fn(x) -> x !="" end)
-
-
-    str_odd = str |> Enum.count |> rem(2) != 0
-
-    str_chunked = str
-     |> Enum.chunk_every(2)
-
-    cond do
-      str_odd ->
-        [a] = Enum.at(str_chunked, -1)
-        pair_list_builder List.replace_at(str_chunked, -1, [a, "_"])
-      true ->
-        pair_list_builder str_chunked
-    end
-  end
-
-  def pair_list_builder str_chunked do
-    Enum.map(str_chunked, fn([a, b]) ->
-      "#{a}#{b}"
-    end)
+    str_s <> "_"
+    |> String.graphemes
+    |> Enum.chunk(2, 2, :discard)
+    |> Enum.map(&Enum.join/1)
   end
 end
 
