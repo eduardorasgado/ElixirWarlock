@@ -11,14 +11,15 @@ defmodule TwoToOne do
   """
   def longest(a, b) do
     # Put your code here
+    "#{a}#{b}" |> String.codepoints |> Enum.uniq |> Enum.sort |> Enum.join
   end
 end
 
 a = "xyaabbbccccdefww"
 b = "xxxxyyyyabklmopq"
 #correct: "abcdefklmopqwxy"
-IO.puts longest(a, b)
+IO.inspect TwoToOne.longest(a, b)
 
 a = "abcdefghijklmnopqrstuvwxyz"
 #correct: "abcdefghijklmnopqrstuvwxyz"
-IO.puts longest(a, a)
+IO.inspect TwoToOne.longest(a, a)
