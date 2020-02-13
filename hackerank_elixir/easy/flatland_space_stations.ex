@@ -7,8 +7,9 @@ defmodule Solution do
   Hackerank main function to execute solution
   """
   def main do
-    [n, m] = IO.gets("") |> String.strip |> String.split(" ") |> Enum.map(&String.to_integer/1)
-    cities_with_sst = IO.gets("") |> String.strip |> String.split(" ") |> Enum.map(&String.to_integer/1)
+    [n, m] = IO.gets("") |> String.trim |> String.split(" ") |> Enum.map(&String.to_integer/1)
+    cities_with_sst = IO.gets("") |> String.trim |> String.split(" ") |> Enum.map(&String.to_integer/1)
+    IO.puts solution([n, m], cities_with_sst)
   end
 
   @doc """
@@ -38,20 +39,55 @@ defmodule Solution do
   Determine the maximum distance from any city to it's nearest space station.
   """
   def main_dev([total_cities, num_cities_with_sst], cities_with_sst) do
-    solution([total_cities, num_cities_with_sst], cities_with_sst)
+    IO.puts solution([total_cities, num_cities_with_sst], cities_with_sst)
   end
 
-  defp solution([total_cities, num_cities_with_sst], cities_with_sst) do
+  defp solution([total_cities, _num_cities_with_sst], cities_with_sst) do
     get_closest_stations(total_cities, cities_with_sst)
 
   end
 
   defp get_closest_stations(total_cities, cities_with_sst) do
-    0..total_cities-1
+    # assembling a list structure like this:
+    # {city, nearest station, if it has an station, all the cities with space stations}
+    cities = 0..total_cities-1
     |> Enum.map(fn(city) ->
-      {city, 0, Enum.member?(cities_with_sst, city)}
+      {city, 0, Enum.member?(cities_with_sst, city), cities_with_sst}
     end)
-    |> IO.inspect
+    |> get_nearest_station
+
+    [_c, max_distance | _tail] =
+      cities
+      |> Enum.max_by(fn({_, cls_sst_distance, _, _}) ->
+        cls_sst_distance
+      end)
+      |> Tuple.to_list
+
+      max_distance
+  end
+
+  defp get_nearest_station(cities) do
+    # we are iterating over all the cities and if they have space stations
+    # they will be marked as cero the nearest space station distance
+    # but if they does not have SS then we will iterate over all cities with SS
+    # and will get the nearest SS for the given city case
+    cities |>
+    Enum.map(fn({cty, _cls_sst, w_sst, cities_with_sst}) ->
+      cond do
+        w_sst == true ->
+          {cty, 0, w_sst, cities_with_sst}
+        true ->
+          # here we should get the nearest station
+          # expanding cities_with_sst to {city, difference between c_W_sst and currect city analized}
+          {_c_w_sst, nearest_distance} = Enum.map(cities_with_sst, fn(c) ->
+            {c, abs(cty - c)}
+          end)
+          |> Enum.min_by(fn({_c, diff})->
+            diff
+          end)
+          {cty, nearest_distance, w_sst, cities_with_sst}
+      end
+    end)
   end
 end
 
