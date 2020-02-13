@@ -50,32 +50,24 @@ defmodule Solution do
   defp get_closest_stations(total_cities, cities_with_sst) do
     # assembling a list structure like this:
     # {city, nearest station, if it has an station, all the cities with space stations}
-    cities = 0..total_cities-1
+    0..total_cities-1
     |> Enum.map(fn(city) ->
-      {city, 0, Enum.member?(cities_with_sst, city), cities_with_sst}
+      {city, 0, Enum.member?(cities_with_sst, city)}
     end)
-    |> get_nearest_station
-
-    [_c, max_distance | _tail] =
-      cities
-      |> Enum.max_by(fn({_, cls_sst_distance, _, _}) ->
-        cls_sst_distance
-      end)
-      |> Tuple.to_list
-
-      max_distance
+    |> get_nearest_station(cities_with_sst)
+    |> Enum.max
   end
 
-  defp get_nearest_station(cities) do
+  defp get_nearest_station(cities, cities_with_sst) do
     # we are iterating over all the cities and if they have space stations
     # they will be marked as cero the nearest space station distance
     # but if they does not have SS then we will iterate over all cities with SS
     # and will get the nearest SS for the given city case
     cities |>
-    Enum.map(fn({cty, _cls_sst, w_sst, cities_with_sst}) ->
+    Enum.map(fn({cty, _cls_sst, w_sst}) ->
       cond do
         w_sst == true ->
-          {cty, 0, w_sst, cities_with_sst}
+          0
         true ->
           # here we should get the nearest station
           # expanding cities_with_sst to {city, difference between c_W_sst and currect city analized}
@@ -85,7 +77,7 @@ defmodule Solution do
           |> Enum.min_by(fn({_c, diff})->
             diff
           end)
-          {cty, nearest_distance, w_sst, cities_with_sst}
+          nearest_distance
       end
     end)
   end
