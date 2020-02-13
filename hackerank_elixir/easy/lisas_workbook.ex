@@ -8,7 +8,12 @@ defmodule Solution do
   Hackerank solution
   """
   def main do
-
+    [n, k] = IO.gets("") |> String.trim |> String.split(" ")
+      |> Enum.map(&String.to_integer/1)
+    chapter_list_with_problems =
+      IO.gets("") |> String.trim |> String.split(" ")
+      |> Enum.map(&String.to_integer/1)
+    IO.puts solution(chapter_list_with_problems, k, n, 0, 0, 0)
   end
 
   @doc """
@@ -34,14 +39,23 @@ defmodule Solution do
         # getting the total problems inside actual chapter
         chapter_problems = Enum.at(chapter_list_with_problems, chapter_i)
         # geting the actual chapter special problems and current final page
-        [current_final_page, special_problems] = get_actual_page(chapter_problems, max_probl_per_page, current_final_page)
-        solution(chapter_list_with_problems, max_probl_per_page, total_chap, chapter_i + 1, current_final_page, total_special + special_problems)
+        [current_final_page, special_problems] =
+          get_actual_page(chapter_problems, max_probl_per_page, current_final_page)
+
+        solution(chapter_list_with_problems,
+                  max_probl_per_page,
+                  total_chap,
+                  chapter_i + 1,
+                  current_final_page,
+                  total_special +
+                  special_problems)
       true ->
         total_special
     end
   end
 
   defp get_actual_page chapter_problems, max_probl_per_page, current_final_page do
+    # for current chapter
     total_pages_for_chap = ceil(chapter_problems / max_probl_per_page)
     # IO.puts "Total_page_for_chap is: #{total_pages_for_chap}, total before anything: #{current_final_page}"
     # creating a list as the diagram of the problem look like
@@ -69,4 +83,7 @@ end
 # correct: 4
 Solution.main_dev([5, 3], [4, 2, 6, 1, 10])
 # correct: 8
-
+Solution.main_dev(
+  [10, 5],
+  [3, 8, 15, 11, 14, 1, 9, 2, 24, 31]
+)
