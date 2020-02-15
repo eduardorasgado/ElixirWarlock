@@ -12,6 +12,8 @@ defmodule Discussapp.TopicController do
   plug Discussapp.Plugs.RequireAuth
     when action in [:new, :create, :edit, :update, :delete]
 
+  plug :check_post_owner when action in [:update, :edit, :delete]
+
   @doc """
   This function return a list of all topics registered by users
   """
@@ -121,5 +123,23 @@ defmodule Discussapp.TopicController do
     conn
       |> put_flash(:info, "Topic was deleted")
       |> redirect(to: topic_path(conn, :index))
+  end
+
+  @doc """
+  Plug to parse an action given the ownership of a users post
+  """
+  def check_post_owner(conn, _params) do
+    # id comes from resources in router
+    %{params: %{"id" => topic_id}} = conn
+    # if topic to be handle is owned by the user signed then give permission.
+    if Repo.get(Topic, topic_id).user_id == conn.assigns.user.id do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You cannot edit that")
+      |> redirect(to: topic_path(conn, :index))
+      # becaus a plug cannot redirect by itself we need to halt the connection
+      |> halt()
+    end
   end
 end
