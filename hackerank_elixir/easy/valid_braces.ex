@@ -25,7 +25,9 @@ defmodule Challenge do
           IO.puts "index + 1: #{index + 1}"
           index_right_side = confirm_brace_closed(braces, actual_brace_pair, index + 1)
           IO.inspect "diff: #{index_right_side - index - 1}"
-          incremets = rem(index_right_side - index - 1, 2) == 0 && n_pattern_matched + 1 || n_pattern_matched
+          inc =
+          incremets = (rem(index_right_side - index - 1, 2) == 0 && index_right_side != Enum.count(braces))
+            && n_pattern_matched + 1 || n_pattern_matched
           braces_analizer(braces, b_reference, index + 1, incremets)
         true ->
           braces_analizer(braces, b_reference, index + 1, n_pattern_matched)
@@ -45,7 +47,7 @@ defmodule Challenge do
 
     cond do
       Enum.at(braces, index) == l || index >= Enum.count(braces)->
-        IO.inspect index
+        # IO.inspect index
         index
        true -> confirm_brace_closed(braces, actual_brace_pair, index + 1)
     end
@@ -64,3 +66,6 @@ IO.puts("----------")
 IO.inspect Challenge.valid_braces("[({})](]")
 IO.puts("----------")
 IO.inspect Challenge.valid_braces(")(}{][")
+IO.puts("----------")
+IO.inspect Challenge.valid_braces("(({{[[]]}}))")
+
