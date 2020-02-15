@@ -47,8 +47,8 @@ defmodule Challenge do
 
     cond do
       Enum.at(braces, index) == l || index >= Enum.count(braces)->
-        # IO.inspect index
-        index
+        IO.inspect index
+        rem(index, 2) == 0 && 0 || index
        true -> confirm_brace_closed(braces, actual_brace_pair, index + 1)
     end
     # new index come here or nil, cuz there is a chance to get no no closing c brace
@@ -65,7 +65,8 @@ IO.inspect Challenge.valid_braces("[(])")
 IO.puts("----------")
 IO.inspect Challenge.valid_braces("[({})](]")
 IO.puts("----------")
-IO.inspect Challenge.valid_braces(")(}{][")
-IO.puts("----------")
+# true
 IO.inspect Challenge.valid_braces("(({{[[]]}}))")
-
+IO.puts("----------")
+# true
+IO.inspect Challenge.valid_braces("{}[]{}(){}")
