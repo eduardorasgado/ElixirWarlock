@@ -33,6 +33,14 @@ defmodule Discussapp.TopicController do
   end
 
   @doc """
+    Return specific post and its comments
+  """
+  def show(conn, %{ "id" => topic_id }) do
+    topic = Repo.get!(Topic, topic_id)
+    render conn, "show.html", topic: topic
+  end
+
+  @doc """
   This function handles the form to create a new topic
   """
   def new(conn, _params) do
