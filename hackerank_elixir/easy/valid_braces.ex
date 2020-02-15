@@ -29,7 +29,7 @@ defmodule Challenge do
           index_right_side = confirm_brace_closed(braces, actual_brace_pair, index, index + 1)
           IO.inspect "diff: #{index_right_side} - #{index} =  #{index_right_side - index - 1}"
 
-          incremets = (rem(index_right_side - index - 1, 2) == 0)
+          incremets = (rem(index_right_side - index - 1, 2) == 0 && index_right_side != Enum.count(braces))
             && n_pattern_matched + 1 || n_pattern_matched
           inc = "increments " <> Integer.to_string(incremets)
           IO.puts inc
