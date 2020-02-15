@@ -1,1 +1,1 @@
-<%= @topic.title %>
+<h5>topics/<%= @topic.title %></h5>

@@ -8,9 +8,8 @@
             <%# iterating using for loop inside eex notation %>
             <%= for topic <- @topics do %>
                 <li class="collection-item">
-                    <%= link to: topic_path(@conn, :show, topic.id) do %>
-                        <%= topic.title %>  
-                    <% end %>
+                    <%= link topic.title, to: topic_path(@conn, :show, topic.id) %>
+                    
                     <%= if @conn.assigns.user != nil do %> 
                         <%= if @conn.assigns.user.id == topic.user_id do %>
                             <div class="right">
