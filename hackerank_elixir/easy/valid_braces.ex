@@ -1,4 +1,8 @@
 defmodule Challenge do
+  @moduledoc """
+  Problem can be find here:
+    https://www.codewars.com/kata/5277c8a221e209d3f6000b56
+  """
   def valid_braces(braces) do
     b_reference = [{"(", ")"}, {"{", "}"}, {"[", "]"}]
     n_p_m = braces |> String.graphemes
