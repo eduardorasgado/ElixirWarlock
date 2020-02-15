@@ -11,6 +11,7 @@ defmodule Discussapp.Topic do
     # ecto will create the user_id using the model_id syntax
     # note that user is not in plural because it not means for db schema
     belongs_to :user, Discussapp.User
+    has_many :comments, Discussapp.Comment
   end
 
   @doc """

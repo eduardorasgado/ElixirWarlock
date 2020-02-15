@@ -13,6 +13,7 @@ defmodule Discussapp.User do
     # if we define the relation here, the same should be in topic model, but belongs to rel
     # note that topics refers to topics schema and it is in plural form
     has_many :topics, Discussapp.Topic
+    has_many :comments, Discussapp.Comment
     timestamps() # timestamps does not need to have specifications
   end
 
