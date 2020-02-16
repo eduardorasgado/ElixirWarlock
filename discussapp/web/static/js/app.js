@@ -17,5 +17,5 @@ import "phoenix_html"
 //
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
-
-// import socket from "./socket"
+// this line was uncommented to let socket js works
+import socket from "./socket"
