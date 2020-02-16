@@ -7,11 +7,20 @@ import {Socket} from "phoenix"
 
 let socket = new Socket("/socket", {params: {token: window.userToken}})
 
+/**
+ * Steps to perform a web socket connection
+ * 
+ * 1 ) conencting to socket
+ * 
+ */
 socket.connect()
 
+// 2 ) client socket performs a connection to comments channel
 // let channel = socket.channel("topic:subtopic", {})
 let channel = socket.channel("comments:1", {})
 
+// 5 ) receiving the map and acting in server side by returning a message and the
+// map content
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })

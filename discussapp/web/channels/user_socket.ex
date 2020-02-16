@@ -14,6 +14,8 @@ defmodule Discussapp.UserSocket do
   # channel "room:*", Discussapp.RoomChannel
   # phoenix will handle everything that comes from  comments colon anything
   # and be handle by CommentsChannel
+  # see sockets.js in static/ js folder:
+  # 3 ) Matching correct channel to handle the socket connection
   channel "comments:*", Discussapp.CommentsChannel
 
   ## Transports
